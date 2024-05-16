@@ -1,13 +1,12 @@
 {% if messages %}
 {% for message in messages %}
-  <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
 <script>
 
     Toastify({
         text: '{{ message|safe }}',
         className: "info",
         style: {
-          background: "linear-gradient(to right, #00b09b, #96c93d)",
+          background: "blue",
         }
       }).showToast();
 
@@ -17,17 +16,34 @@
 
 {% if form.errors %}
 <div class="alert alert-error">
-  <h4>Please fix the following errors</h4>
   <ul>
     {% for field in form %}
       {% if field.errors %}
         {% for error in field.errors %}
-          <li><a href="#id_{{ field.name }}" class="error">{{ error|escape }}</a></li>
+          <script>
+            Toastify({
+                text: `{{ field.name }}-{{ error|escape }}`,
+                className: "error",
+                style: {
+                  background: "red",
+                }
+              }).showToast();
+        </script>
         {% endfor %}
       {% endif %}
     {% endfor %}
   </ul>
   {% if form.non_field_errors %}
+  <script>
+    Toastify({
+        text: `{{form.non_field_errors.as_text}}`,
+        className: "error",
+        style: {
+          background: "red",
+        }
+      }).showToast();
+</script>
+
     {{ form.non_field_errors }}
   {% endif %}
 </div>
@@ -35,8 +51,7 @@
 
 
 
-<script>
-
+{% comment %} <script>
     Toastify({
         text: "This is a toast",
         className: "info",
@@ -44,5 +59,4 @@
           background: "linear-gradient(to right, #00b09b, #96c93d)",
         }
       }).showToast();
-
-</script>
+</script> {% endcomment %}
