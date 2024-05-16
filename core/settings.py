@@ -145,3 +145,4 @@ AUTH_USER_MODEL = 'accounts.User'
 #Redirect url for authentication
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL='/'
+LOGOUT_REDIRECT_URL='/'

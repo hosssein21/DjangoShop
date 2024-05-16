@@ -8,3 +8,5 @@ class LoginView(auth_view.LoginView):
     form_class = AuthenticationForm
     redirect_authenticated_user = True
     
+class LogoutView(auth_view.LogoutView):
+    pass
