@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+    <!-- Signup Form -->
+    <div class="container content-space-3 content-space-t-lg-4 content-space-b-lg-3">
+        <div class="flex-grow-1 mx-auto" style="max-width: 28rem;">
+            <!-- Heading -->
+            <div class="text-center mb-5 mb-md-7">
+                <h1 class="h2">فرم ثبت نام</h1>
+                <p>برای ایجاد حساب جدید ثبت نام کنید.</p>
+            </div>
+            <!-- End Heading -->
+
+            
+            
+
+            <!-- OR separator -->
+            <div class="text-center mb-4">
+                <span>یا</span>
+            </div>
+
+            <!-- Form -->
+            <form action="{% url 'accounts:signup' %}" method="POST">
+                {% csrf_token %}
+                <!-- Form -->
+                
+                <!-- End Form -->
+
+                <!-- Form -->
+                <div class="mb-4">
+                    <label class="form-label" for="signupSimpleEmail">ایمیل شما</label>
+                    <input type="email" class="form-control form-control-lg text-center" name="email"
+                        id="signupSimpleEmail" placeholder="email@site.com" aria-label="email@site.com" required>
+                    <span class="invalid-feedback">لطفا یک آدرس ایمیل معتبر وارد کنید.</span>
+                </div>
+                <!-- End Form -->
+
+                <!-- Form -->
+                <div class="mb-4">
+                    <label class="form-label" for="signupSimplePassword1">کلمه عبور</label>
+                    <div class="input-group input-group-merge">
+                        <input type="password" class="js-toggle-password form-control form-control-lg text-center" name="password1"
+                            id="signupSimplePassword1" placeholder="8+ characters required" aria-label="8+ characters required"
+                            required minlength="8" data-hs-toggle-password-options='{
+                            "target": "#signupChangePassTarget1",
+                            "defaultClass": "bi-eye-slash",
+                            "showClass": "bi-eye",
+                            "classChangeTarget": "#signupChangePassIcon1"
+                        }'>
+                        <a id="signupChangePassTarget1" class="input-group-append input-group-text" href="javascript:;">
+                            <i id="signupChangePassIcon1" class="bi-eye"></i>
+                        </a>
+                    </div>
+                    <span class="invalid-feedback">لطفا یک گذر واژه معتبر وارد کنید.</span>
+                </div>
+                <!-- End Form -->
+
+                <!-- Form -->
+                <div class="mb-4">
+                    <label class="form-label" for="signupSimplePassword2">تایید کلمه عبور</label>
+                    <div class="input-group input-group-merge">
+                        <input type="password" class="js-toggle-password form-control form-control-lg text-center" name="password2"
+                            id="signupSimplePassword2" placeholder="8+ characters required" aria-label="8+ characters required"
+                            required minlength="8" data-hs-toggle-password-options='{
+                            "target": "#signupChangePassTarget2",
+                            "defaultClass": "bi-eye-slash",
+                            "showClass": "bi-eye",
+                            "classChangeTarget": "#signupChangePassIcon2"
+                        }'>
+                        <a id="signupChangePassTarget2" class="input-group-append input-group-text" href="javascript:;">
+                            <i id="signupChangePassIcon2" class="bi-eye"></i>
+                        </a>
+                    </div>
+                    <span class="invalid-feedback">لطفا یک گذر واژه معتبر وارد کنید.</span>
+                </div>
+                <!-- End Form -->
+
+                <div class="d-grid mb-3">
+                    <button type="submit" class="btn btn-primary btn-lg">ثبت نام</button>
+                </div>
+
+                <div class="text-center">
+                    <p>حساب کاربری دارید؟ <a class="link" href="{% url 'accounts:login' %}">اینجا وارد شوید</a></p>
+                </div>
+            </form>
+            <!-- End Form -->
+
+            <!-- OR separator -->
+            <div class="text-center mb-4">
+                <span>یا</span>
+            </div>
+
+            <!-- Google Sign In Button -->
+            <div class="d-grid mb-4">
+                <a href="/accounts/socials/google/login/" class="btn btn-lg btn-outline-dark">
+                    <img src="{% static 'assets/img/mockups/google.png' %}" alt="Google Logo" style="height: 20px; margin-right: 10px;">
+                    ورود با Google
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- End Signup Form -->
+{% endblock %}
