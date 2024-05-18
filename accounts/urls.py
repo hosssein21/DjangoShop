@@ -10,4 +10,9 @@ urlpatterns = [
      
      #social accounts authentication
     path('socials/google/',include('accounts.social.urls')),
+    
+    #sending email
+    path('send-test/',views.TestEmailView.as_view(),name='send_test')
+    
+    
 ]
