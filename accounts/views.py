@@ -38,10 +38,6 @@ class ResetPasswordView(SuccessMessageMixin, auth_view.PasswordResetView):
     template_name = 'email/password-reset.html'
     email_template_name = 'email/password-reset-email.html'
     subject_template_name = 'email/password-reset-subject.txt'
-    success_message = "We've emailed you instructions for setting your password, " \
-                      "if an account exists with the email you entered. You should receive them shortly." \
-                      " If you don't receive an email, " \
-                      "please make sure you've entered the address you registered with, and check your spam folder."
     success_url = reverse_lazy('accounts:password_reset_done')
     
 class PasswordRestDoneView(auth_view.PasswordResetDoneView):
