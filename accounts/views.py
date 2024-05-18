@@ -80,10 +80,10 @@ class ResetPasswordView(auth_view.PasswordResetView):
         recipient_list = [user.email]
 
         # Start a new thread for sending the email
-        # TemplateEmailThread(subject, html_message, plain_message, from_email, recipient_list).start()
+        TemplateEmailThread(subject, html_message, plain_message, from_email, recipient_list).start()
         
         # Use Celery to send the email
-        send_password_reset_email.delay(subject, plain_message, html_message, from_email, recipient_list)
+        # send_password_reset_email.delay(subject, plain_message, html_message, from_email, recipient_list)
         
         
         return super().form_valid(form)
