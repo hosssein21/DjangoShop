@@ -3,9 +3,10 @@ from .forms import AuthenticationForm,SignUpForm
 from django.urls import reverse_lazy
 from django.views import generic
 from django.views import View
-from mail_templated import send_mail
+from .utils import EmailThread
+from mail_templated import EmailMessage
 from django.http import HttpResponse
-
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 class LoginView(auth_view.LoginView):
@@ -27,9 +28,33 @@ class SignUpView(generic.CreateView):
 class TestEmailView(View):
     
     def get(self,request,*args,**kwargs):
-        send_mail('email/hello.tpl', {'name': 'developer'},'admin@admin.com' , ['hossein@gmail.com'])
+        email_obj= EmailMessage('email/hello.tpl', {'user':'developer'}, 'hossseinkazemi79@gmail.com',
+                       to=['pythonprojectkazemi@gmail.com'])
+        EmailThread(email_obj).start()
         return HttpResponse('email sent successfully')
     
+
+class ResetPasswordView(SuccessMessageMixin, auth_view.PasswordResetView):
+    template_name = 'email/password-reset.html'
+    email_template_name = 'email/password-reset-email.html'
+    subject_template_name = 'email/password-reset-subject.txt'
+    success_message = "We've emailed you instructions for setting your password, " \
+                      "if an account exists with the email you entered. You should receive them shortly." \
+                      " If you don't receive an email, " \
+                      "please make sure you've entered the address you registered with, and check your spam folder."
+    success_url = reverse_lazy('accounts:password_reset_done')
+    
+class PasswordRestDoneView(auth_view.PasswordResetDoneView):
+    template_name="email/password-reset-done.html"
     
 
-
+class PasswordRestConfirmView(auth_view.PasswordResetConfirmView):
+    template_name = 'email/password-reset-confirm.html'
+    success_url = reverse_lazy("accounts:password_reset_complete")
+    
+class PasswordResetCompleteView(auth_view.PasswordResetCompleteView):
+    template_name = 'email/password-reset-complete.html'
+    
+    
+    
+    
