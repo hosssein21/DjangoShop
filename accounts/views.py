@@ -4,18 +4,20 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.views import View
 from .utils import EmailThread,TemplateEmailThread
-from mail_templated import EmailMessage
+from django.core.mail import EmailMessage
 from django.http import HttpResponse
-from django.contrib.messages.views import SuccessMessageMixin
+from django.core.mail import send_mail
+from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-from django.utils.http import urlsafe_base64_encode
-from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth import get_user_model
+from django.shortcuts import render,redirect
 from .tasks import send_password_reset_email
 
-
+User=get_user_model()
 
 
 class LoginView(auth_view.LoginView):
@@ -30,8 +32,41 @@ class LogoutView(auth_view.LogoutView):
 
 class SignUpView(generic.CreateView):
     form_class = SignUpForm
-    success_url = reverse_lazy('accounts:login')
+    success_url = reverse_lazy('accounts:account_activation_sent')
     template_name = 'accounts/signup.html'
+    
+    
+    def form_valid(self, form):
+        user = form.save(commit=False)
+        user.is_verified = False
+        user.save()
+        current_site = get_current_site(self.request)
+        subject = 'Activate Your Account'
+        message = render_to_string('email/account-activation.html', {
+            'user': user,
+            'domain': current_site.domain,
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': default_token_generator.make_token(user),
+        })
+        email = EmailMessage(subject, message, to=[user.email])
+        email.content_subtype = 'html'  # Specify that the email content is HTML
+        email.send()
+        return super().form_valid(form)
+
+class ActivateView(generic.View):
+    def get(self, request, uidb64, token):
+        try:
+            uid = force_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            user = None
+
+        if user is not None and default_token_generator.check_token(user, token):
+            user.is_active = True
+            user.save()
+            return redirect('accounts:login')
+        else:
+            return render(request, 'email/account-activation-invalid.html')
 
 
 class TestEmailView(View):

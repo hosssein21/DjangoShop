@@ -1,0 +1,22 @@
+<!-- templates/account_activation_sent.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container content-space-3 content-space-t-lg-4 content-space-b-lg-3">
+    <div class="flex-grow-1 mx-auto" style="max-width: 28rem;">
+        <!-- Heading -->
+        <div class="text-center mb-5 mb-md-7">
+            <h1 class="h2">ایمیل فعال‌سازی ارسال شد</h1>
+            <p>یک ایمیل تایید به آدرس ایمیل شما ارسال شده است. لطفا برای تکمیل ثبت نام خود، ایمیل خود را بررسی کنید.</p>
+        </div>
+        <!-- End Heading -->
+
+        <!-- Instructions -->
+        <div class="text-center">
+            <p>اگر ایمیلی دریافت نکردید، لطفا پوشه اسپم خود را بررسی کنید یا</p>
+            <a href="{% url 'accounts:signup' %}" class="btn btn-lg btn-primary">دوباره ثبت‌نام کنید</a>
+        </div>
+        <!-- End Instructions -->
+    </div>
+</div>
+{% endblock %}

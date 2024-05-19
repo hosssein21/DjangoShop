@@ -1,0 +1,22 @@
+
+<!-- templates/account_activation_invalid.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container content-space-3 content-space-t-lg-4 content-space-b-lg-3">
+    <div class="flex-grow-1 mx-auto" style="max-width: 28rem;">
+        <!-- Heading -->
+        <div class="text-center mb-5 mb-md-7">
+            <h1 class="h2">فعال‌سازی نامعتبر</h1>
+            <p>متاسفانه لینک فعال‌سازی شما نامعتبر یا منقضی شده است. لطفا مجددا تلاش کنید.</p>
+        </div>
+        <!-- End Heading -->
+
+        <!-- Retry Button -->
+        <div class="text-center">
+            <a href="{% url 'accounts:signup' %}" class="btn btn-lg btn-primary">ثبت‌نام مجدد</a>
+        </div>
+        <!-- End Retry Button -->
+    </div>
+</div>
+{% endblock %}

@@ -1,5 +1,6 @@
 from django.urls import path,include
 from . import views
+from django.views.generic import TemplateView
 
 app_name = 'accounts'
 urlpatterns = [
@@ -19,6 +20,10 @@ urlpatterns = [
     path('password-reset-done/',views.PasswordRestDoneView.as_view(),name='password_reset_done'),
     path('password-reset-confirm/<uidb64>/<token>/',views.PasswordRestConfirmView.as_view(),name='password_reset_confirm'),
     path('password-reset-complete/',views.PasswordResetCompleteView.as_view(),name='password_reset_complete'),
+    
+    #activation accounts
+    path('activate/<uidb64>/<token>/', views.ActivateView.as_view(), name='activate'),
+    path('account-activation-sent/', TemplateView.as_view(template_name='email/account-activation-sent.html'), name='account_activation_sent'),
     
     
 ]

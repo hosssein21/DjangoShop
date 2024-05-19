@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activate Your Account</title>
+</head>
+<body>
+    <p>Hi {{ user.username }},</p>
+    <p>Please click the link below to activate your account:</p>
+    <p>
+        <a href="http://127.0.0.1:8000/{% url 'accounts:activate' uidb64=uid token=token %}">Activate your account</a>
+    </p>
+    <p>Thank you for registering.</p>
+</body>
+</html>
