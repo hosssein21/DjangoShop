@@ -34,7 +34,7 @@ class ProductModel(models.Model):
     stock = models.PositiveIntegerField(default=0)
     status = models.IntegerField(choices=ProductStatusType.choices,default=ProductStatusType.draft.value)
     price = models.DecimalField(default=0,max_digits=10,decimal_places=0)
-    
+    discount_percent = models.IntegerField(default=0)
     
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)

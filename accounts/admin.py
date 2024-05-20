@@ -33,6 +33,7 @@ class CustomUserAdmin(UserAdmin):
                     "is_active",
                     "is_superuser",
                     "is_verified",
+                
                 ),
             },
         ),
