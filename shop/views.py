@@ -8,6 +8,7 @@ from django.views.generic import ListView,DetailView
 class ShopProductGridView(ListView):
     template_name = "shop/product-grid.html"
     context_object_name = 'products'
+    paginate_by =6
     
     def get_queryset(self):
         return ProductModel.objects.filter(status=ProductStatusType.publish.value)
