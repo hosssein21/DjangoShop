@@ -442,7 +442,7 @@
                   </div>
 
                   <h4 class="card-title">
-                    <a class="text-dark" href="/product-overview.html">{{product.title}}</a>
+                    <a class="text-dark" href="{% url 'shop:product_detail' slug=product.slug %}">{{product.title}}</a>
                   </h4>
                   <p class="card-text text-dark">{{product.get_price}}تومان</p>
                 </div>
