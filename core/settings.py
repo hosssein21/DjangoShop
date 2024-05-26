@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'accounts',
     'mail_templated',
     'shop',
+    'cart',
     
 ]
 
