@@ -136,11 +136,16 @@
                 <!-- End Search -->
   
                 <!-- Shopping Cart -->
-                <button type="button" class="btn btn-ghost-secondary btn-icon" type="button" data-bs-toggle="offcanvas"
+                {% comment %} <button type="button" class="btn btn-ghost-secondary btn-icon" type="button" data-bs-toggle="offcanvas"
                   data-bs-target="#offcanvasNavbarShoppingCart" aria-controls="offcanvasNavbarShoppingCart">
                   <i class="bi-basket"></i>
                   <span class="cart-item-count ">3</span>
-                </button>
+                </button> {% endcomment %}
+
+                <a href="{% url 'cart:cart-summary'%}" class="btn btn-ghost-secondary btn-icon">
+                  <i class="bi-basket"></i>
+                  <span class="cart-item-count " id="total-cart-item-count">{{cart.get_total_quantitiy}}</span>
+                </a>
                 <!-- End Shopping Cart -->
                 
                 {% if request.user.is_authenticated %}
@@ -605,36 +610,9 @@
             }
         });
     }
-    function addToWishlist(element,product_id) {
+
  
-        //console.log(product_id)
-        $.ajax({
-            url: "{%  url 'shop:add-or-remove-wishlist' %}",
-            method: 'POST',
-            data: {
-                product_id: product_id,
-                csrfmiddlewaretoken: '{{ csrf_token }}'
-    
-            },
-            success: function (response) {
-
-                Toastify({
-                    text:response.message,
-                    className: `info`,
-                    style: {
-                      background: "blue",
-                    }
-                  }).showToast();
-                $(element).toggleClass('active');
-
-                // do something with the response data
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.log(errorThrown);
-                // handle the error case
-            }
-        });
-    }
+ 
     
 </script>
 

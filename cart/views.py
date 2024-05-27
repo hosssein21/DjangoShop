@@ -10,9 +10,17 @@ class SessionAddProductView(View):
     def post(self, request, *args, **kwargs):
         cart = CartSession(request.session)
         product_id = request.POST.get("product_id")
-        if product_id and ProductModel.objects.filter(id=product_id, status=ProductStatusType.publish.value).exists():
-
+        if product_id:
             cart.add_product(product_id)
-        if request.user.is_authenticated:
-            cart.merge_session_cart_in_db(request.user)
         return JsonResponse({"cart": cart.get_cart_dict(), "total_quantity": cart.get_total_quantity()})
+    
+    
+class CartSummaryView(TemplateView):
+    template_name = "cart/cart-summary.html"
+    
+    
+
+    
+    
+    
+    
