@@ -15,6 +15,15 @@ class CartSession:
             return
         self.save()
         
+    def remove_product(self,product_id):
+        for item in self._cart["items"]:
+            if product_id == item["product_id"]:
+                self._cart["items"].remove(item)
+                break
+        else:
+            return
+        self.save()
+        
     def add_product(self, product_id):
         for item in self._cart["items"]:
             if product_id == item["product_id"]:
@@ -28,11 +37,18 @@ class CartSession:
     def get_cart_dict(self):
         return self._cart
     
+    def get_total_payment_amount(self):
+        return sum(item["total_price"] for item in self._cart["items"])
+    
     def get_total_quantity(self):
         return sum(item["quantity"] for item in self._cart["items"])
     
+    def get_cart_items(self):
+        for item in self._cart["items"]:
+            product_obj = ProductModel.objects.get(id=item["product_id"], status=ProductStatusType.publish.value)
+            item.update({"product_obj": product_obj, "total_price": item["quantity"] * product_obj.get_price()})
+        return self._cart["items"]
     
-        
     def save(self):
         self.session.modified = True
         

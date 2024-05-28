@@ -18,7 +18,7 @@
 
             <!-- List Group -->
             <ul class="list-group list-group-flush list-group-no-gutters mb-5">
-                {% for item in cart.get_cart_dict %}
+                {% for item in cart_items %}
                 <!-- Item -->
                 <li class="list-group-item">
                     <div class="d-flex">
@@ -31,7 +31,7 @@
                             <div class="row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <h5><a class="text-dark"
-                                            href="{% url 'shop:product-detail' slug=item.product_obj.slug %}">{{item.product_obj.title}}</a>
+                                            href="{% url 'shop:product_detail' slug=item.product_obj.slug %}">{{item.product_obj.title}}</a>
                                     </h5>
 
                                     <div class="d-block d-sm-none">
@@ -190,4 +190,49 @@
 
 {% endblock %}
 
+{% block extra_js %}
+<script>
+    function changeProductQuantity(product_id,quantity){
+        $.ajax({
+            url: "{%  url 'cart:session-update-product-quantity' %}",
+            method: 'POST',
+            data: {
+                product_id: product_id,
+                quantity: quantity,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+    
+            },
+            success: function (response) {
+                console.log(response);
+                window.location.reload();
+                // do something with the response data
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown);
+                // handle the error case
+            }
+        });
+    }
+    function removeProduct(product_id){
+        $.ajax({
+            url: "{%  url 'cart:session-remove-product' %}",
+            method: 'POST',
+            data: {
+                product_id: product_id,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+    
+            },
+            success: function (response) {
+                console.log(response);
+                window.location.reload();
+                // do something with the response data
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown);
+                // handle the error case
+            }
+        });
+    }
+</script>
 
+{% endblock %}
